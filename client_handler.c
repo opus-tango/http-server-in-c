@@ -8,8 +8,20 @@ void* client_handler(void* args) {
 
     ssize_t bytes_read = recv(client, buffer, BUFFER_SIZE, 0);
     if (bytes_read > 0) {
-        buffer[bytes_read] = '\0';
-        printf("Received: %s\n", buffer);
+        char* ptr = buffer;
+        char* buf_temp[10];
+        char* ptr_temp = buf_temp;
+        while (*ptr != ' ') {
+            *ptr_temp = *ptr;
+            ptr++;
+            ptr_temp++;
+        }
+        *ptr_temp = '\0';
+        if (strcmp(buf_temp, "GET") == 0) {
+            printf("Received a GET request!!\n");
+        } else {
+            printf("Received a non-GET request!!\n");
+        }
     }
     free(buffer);
     return NULL;
