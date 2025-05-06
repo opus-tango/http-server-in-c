@@ -1,3 +1,8 @@
+## Final Project Plan Update
+After thinking it over more, I am going to try building a webserver for user interaction. Whether that becomes big enough to be the whole final project, or I add a website to it, I don't know yet.
+
+
+## Original Plan
 I'm going to build a car dealership interface.
 
 You can log in as a dealer or buyer. Both have inventories, but only dealers can add cars, and only buyers can add money. Buyers can buy cars from dealers. There are two files, one for users and one for transactions, that store the state of the system between sessions.
