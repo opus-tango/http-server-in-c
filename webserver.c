@@ -55,6 +55,7 @@ int main(int argc, char **argv) {
                 read(STDIN_FILENO, &c, 1);
                 if (c == 'q') {
                     close(server);
+                    shutdown(server, SHUT_RDWR);
                     printf("Server closed\n");
                     break;
                 }
