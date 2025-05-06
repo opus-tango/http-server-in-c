@@ -1,9 +1,11 @@
 #include <netinet/in.h>
+#include <pthread.h>
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
 #include <sys/socket.h>
-// #include <pthread.h>
+
+#include "client_handler.h"
 
 struct sockaddr_in server_addr;
 
@@ -43,8 +45,10 @@ int main(int argc, char **argv) {
         if (client < 0) {
             perror("Failed to accept client");
             continue;
-        } else {
-            printf("Client connected\n");
         }
+
+        pthread_t thread;
+        pthread_create(&thread, NULL, client_handler, (void *)client);
+        pthread_detach(thread);
     }
 }
