@@ -33,4 +33,18 @@ int main(int argc, char **argv) {
         perror("listen failed");
         exit(1);
     }
+
+    while (1) {
+        struct sockaddr_in client_addr;
+        socklen_t client_len = sizeof(client_addr);
+        int *client = malloc(sizeof(int));
+
+        *client = accept(server, (struct sockaddr *)&client_addr, &client_len);
+        if (client < 0) {
+            perror("Failed to accept client");
+            continue;
+        } else {
+            printf("Client connected\n");
+        }
+    }
 }
