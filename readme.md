@@ -10,6 +10,9 @@ I also plan to publish this as a portfolio project for my resume.
 ## TODO List
 - [x] Get basic HTTP interaction working
 - [x] Get url parsing working
+- [x] Fix existing bugs in socket handling and TCP buffering
+- [ ] Finish code to parse HTTP requests
+- [ ] Finish code to build HTTP responses
 - [ ] Get file serving working
 - [ ] Create basic templating engine for HTML working
 - [ ] Get POST requests working
