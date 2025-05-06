@@ -1,5 +1,23 @@
 ## Final Project Plan Update
-After thinking it over more, I am going to try building a webserver for user interaction. Whether that becomes big enough to be the whole final project, or I add a website to it, I don't know yet.
+Even though I haven't had time to work on it, I have been turning this project over in my mind for the past two weeks. I have wanted to build my own basic HTTP server for a while, and this is the only piece of homework due this week, so I have decided to make my final project a basic HTTP server.
+
+I am also planning to create the car dealership app, but build it as a web app that uses my HTTP server, and modifies HTML and handles POST requests for the user interaction. 
+
+I still have not decided whether to use files, or spin up a redis instance to store state, but I'll deal with that when I come to it.
+
+I also plan to publish this as a portfolio project for my resume.
+
+## TODO List
+- [x] Get basic HTTP interaction working
+- [x] Get url parsing working
+- [ ] Get file serving working
+- [ ] Create basic templating engine for HTML working
+- [ ] Get POST requests working
+- [ ] Set up database (files or redis)
+- [ ] Create car dealership "classes"
+- [ ] Create car dealership app
+- [ ] Publish as a portfolio project
+
 
 
 ## Original Plan
