@@ -55,7 +55,25 @@ void handle_request(char* request, int length, char* response,
 
     // Create reponse string
     ptr_temp = response;
-    char* temp = "HTTP/1.1 200 OK\nContent-Type: text/html\n\n";
+    char* temp =
+        "HTTP/1.1 200 OK\r\nContent-Type: text/html \r\nContent-Length: ";
+    while (*temp != '\0') {
+        *ptr_temp = *temp;
+        ptr_temp++;
+        temp++;
+    }
+    // Put content length in the html response
+    int content_length = strlen(filename);
+    char content_length_str[10];
+    sprintf(content_length_str, "%d", content_length);
+    temp = (char*)&content_length_str;
+    while (*temp != '\0') {
+        *ptr_temp = *temp;
+        ptr_temp++;
+        temp++;
+    }
+    // Terminate header
+    temp = "\r\n\r\n\0";
     while (*temp != '\0') {
         *ptr_temp = *temp;
         ptr_temp++;
