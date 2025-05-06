@@ -11,6 +11,7 @@
 #include "client_handler.h"
 
 struct sockaddr_in server_addr;
+#define DEBUG 1
 
 int main(int argc, char **argv) {
     // Create socket
@@ -24,6 +25,11 @@ int main(int argc, char **argv) {
     server_addr.sin_family = AF_INET;
     server_addr.sin_addr.s_addr = INADDR_ANY;
     server_addr.sin_port = htons(8080);
+    // Allow reuse of port when debugging
+    if (DEBUG) {
+        int reuse = 1;
+        setsockopt(server, SOL_SOCKET, SO_REUSEADDR, &reuse, sizeof(int));
+    }
 
     // Bind socket
     if (bind(server, (struct sockaddr *)&server_addr, sizeof(server_addr)) <
