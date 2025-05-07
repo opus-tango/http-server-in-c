@@ -1,0 +1,109 @@
+#include "http_stuff.h"
+
+http_request* create_http_request() {
+    http_request* req = (http_request*)malloc(sizeof(http_request));
+    req->method = NULL;
+    req->url = NULL;
+    req->num_headers = 0;
+    req->headers = NULL;
+    req->content_type = NULL;
+    req->content_length = 0;
+    req->body = NULL;
+    return req;
+}
+
+http_response* create_http_response() {
+    http_response* res = (http_response*)malloc(sizeof(http_response));
+    res->status_line = NULL;
+    res->num_headers = 0;
+    res->headers = NULL;
+    res->content_type = NULL;
+    res->content_length = 0;
+    res->body = NULL;
+    return res;
+}
+
+http_request* free_http_request(http_request* req) {
+    free(req->method);
+    free(req->url);
+    free(req->headers);
+    free(req->content_type);
+    free(req->body);
+    free(req);
+    return NULL;
+}
+
+http_response* free_http_response(http_response* res) {
+    free(res->status_line);
+    free(res->headers);
+    free(res->content_type);
+    free(res->body);
+    free(res);
+    return NULL;
+}
+
+void print_http_request(http_request* req) {
+    printf("Method: %s\n", req->method);
+    printf("URL: %s\n", req->url);
+    printf("Headers:\n");
+    for (int i = 0; i < req->num_headers; i++) {
+        printf("%s: %s\n", req->headers[i].key, req->headers[i].value);
+    }
+    printf("Content-Type: %s\n", req->content_type);
+    printf("Content-Length: %zu\n", req->content_length);
+    printf("Body:\n%s\n", req->body);
+}
+
+void print_http_response(http_response* res) {
+    printf("Status Line: %s\n", res->status_line);
+    printf("Headers:\n");
+    for (int i = 0; i < res->num_headers; i++) {
+        printf("%s: %s\n", res->headers[i].key, res->headers[i].value);
+    }
+    printf("Content-Type: %s\n", res->content_type);
+    printf("Content-Length: %zu\n", res->content_length);
+    printf("Body:\n%s\n", res->body);
+}
+
+char* reponse_to_string(http_response* res) {
+    int total_length = 0;
+    int len_newline = strlen("\r\n");
+    int len_crlf = strlen("\r\n\r\n");
+
+    total_length += strlen(res->status_line);
+    total_length += len_newline;
+    for (int i = 0; i < res->num_headers; i++) {
+        total_length += strlen(res->headers[i].key);
+        total_length += strlen(": ");
+        total_length += strlen(res->headers[i].value);
+        total_length += len_newline;
+    }
+    total_length += strlen(res->content_type);
+    total_length += len_crlf;
+    total_length += strlen(res->body);
+    total_length += len_crlf;
+    total_length += 1;  // For null terminator
+
+    char* response = (char*)malloc(total_length);
+    strcpy(response, res->status_line);
+    for (int i = 0; i < res->num_headers; i++) {
+        strcat(response, res->headers[i].key);
+        strcat(response, ": ");
+        strcat(response, res->headers[i].value);
+        strcat(response, "\r\n");
+    }
+    strcat(response, res->content_type);
+    strcat(response, "\r\n\r\n");
+    strcat(response, res->body);
+    strcat(response, "\r\n\r\n");
+    return response;
+}
+
+char* get_header_value_request(http_request* req, char* key) {
+    for (int i = 0; i < req->num_headers; i++) {
+        if (strcmp(req->headers[i].key, key) == 0) {
+            return req->headers[i].value;
+        }
+    }
+    return NULL;
+}
