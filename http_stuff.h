@@ -2,6 +2,7 @@
 #define HTTP_STUFF_H
 
 #include <stdio.h>
+#include <stdlib.h>
 #include <string.h>
 #include <sys/types.h>
 
@@ -140,5 +141,36 @@ char* reponse_to_string(http_response* res);
  * present in the request's headers
  */
 char* get_header_value_request(http_request* req, char* key);
+
+/**
+ * Adds a new header to an http_request struct with the given key and value.
+ *
+ * @param req The request to add the header to
+ * @param key The key of the header
+ * @param key_length The length of the key
+ * @param value The value of the header
+ * @param value_length The length of the value
+ *
+ * @details
+ * This function is meant to be used when the lengths of the key and value are
+ * already known. It is more efficient than request_add_header, which calls
+ * strlen to get the lengths of the key and value.
+ */
+void request_add_header_n(http_request* req, char* key, size_t key_length,
+                          char* value, size_t value_length);
+
+/**
+ * Adds a header to the given HTTP request.
+ *
+ * @param req The request to add the header to
+ * @param key The key of the header to add
+ * @param value The value of the header to add
+ *
+ * @details
+ * This is a convenience function for request_add_headern. It will add a header
+ * with the given key and value to the given request. It will automatically
+ * calculate the length of the key and value.
+ */
+void request_add_header(http_request* req, char* key, char* value);
 
 #endif
