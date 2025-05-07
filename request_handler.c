@@ -1,5 +1,7 @@
 #include "request_handler.h"
 
+void parse_http_request(char* request, int length, struct http_request* req);
+
 void handle_request(char* request, int length, char* response,
                     size_t* response_length) {
     // Terminate request with EOF so strtok stops at end of string
@@ -8,63 +10,12 @@ void handle_request(char* request, int length, char* response,
     printf("Request ---------\n");
     printf("%s\n---------\n", request);
 
+    printf("parsing request ---------\n");
     // Parse request into struct
-    http_request req;
-    char* lines[100];
-    int num_lines = 0;
-    char* tok = strtok(request, "\n");
-
-    while (tok != NULL) {
-        printf("%s\n", tok);
-        tok = strtok(NULL, "\n");
-    }
-
-    // printf("tok is %s\n", tok);
-
-    // // Check if request is GET
-    // char* ptr = request;  // Modifiable pointer to request
-    // char buf_temp[10];    // Temporary buffer to store request code
-    // char* ptr_temp =
-    //     (char*)&buf_temp;  // Modifiable pointer to temporary buffer
-    // // Copy request code to temporary buffer
-    // while (*ptr != ' ') {
-    //     *ptr_temp = *ptr;
-    //     ptr++;
-    //     ptr_temp++;
-    // }
-    // // Null terminate temporary buffer
-    // *ptr_temp = '\0';
-    // ptr++;  // Skip over space
-    // if (strcmp(buf_temp, "GET") == 0) {
-    //     printf("Received a GET request!!\n");
-    // } else {
-    //     printf("Received a non-GET request!!\n");
-    //     return;
-    // }
-
-    // // Get filename from request url
-    // char filename[100];           // Buffer to store filename
-    // ptr_temp = (char*)&filename;  // Modifiable pointer to filename
-    // *ptr_temp = '.';              // Prepend . to filename
-    // ptr_temp++;
-    // // While loop to copy filename to temporary buffer
-    // while (*ptr != ' ') {
-    //     // Convert %20 to space
-    //     if (*ptr == '%' && *(ptr + 1) == '2' && *(ptr + 2) == '0') {
-    //         ptr += 3;
-    //         *ptr_temp = ' ';
-    //         ptr_temp++;
-    //     } else {
-    //         // Copy character
-    //         *ptr_temp = *ptr;
-    //         ptr++;
-    //         ptr_temp++;
-    //     }
-    // }
-    // *ptr_temp = '\0';  // Null terminate filename
-
-    // // Print filename
-    // printf("Filename: %s\n", filename);
+    http_request req = *create_http_request();
+    parse_http_request(request, length, &req);
+    print_http_request(&req);
+    printf("---------\n");
 
     // Create reponse string
     char* ptr_temp = response;
@@ -109,3 +60,69 @@ void handle_request(char* request, int length, char* response,
 
     *response_length = strlen(response);
 }
+
+void parse_http_request(char* request, int length, struct http_request* req) {
+    // Get the end of the first line
+    char* request_line_end = strstr(request, "\r\n");
+    if (request_line_end == NULL) {
+        printf("Invalid packet (end first line)\n");
+        return;
+    }
+
+    // Extract request type
+    char* type_start = request;
+    char* type_end = strstr(type_start, " ");
+    if (type_end == NULL) {
+        printf("Invalid packet (method)\n");
+        return;
+    }
+    req->method = (char*)malloc(type_end - type_start + 1);
+    strncpy(req->method, type_start, type_end - type_start);
+    req->method[type_end - type_start] = '\0';
+
+    // Extract URL
+    char* url_start = type_end + 1;
+    char* url_end = strstr(url_start, " ");
+    if (url_end == NULL) {
+        printf("Invalid packet (url)\n");
+        return;
+    }
+    req->url = (char*)malloc(url_end - url_start + 1);
+    strncpy(req->url, url_start, url_end - url_start);
+    req->url[url_end - url_start] = '\0';
+
+    // Extract headers
+    char* headers_end = strstr(request_line_end + 2, "\r\n\r\n");
+    if (headers_end == NULL) {
+        printf("Invalid packet (headers)\n");
+        return;
+    }
+    char* headers_start = request_line_end + 2;
+    if (headers_start == NULL) {
+        printf("Invalid packet (headers)\n");
+        return;
+    }
+    req->num_headers = 0;
+    char* header_start = headers_start;
+    while (1) {
+        char* header_end = strstr(header_start, "\r\n");
+        if (header_end >= headers_end) {
+            break;
+        }
+        char* delim = strstr(header_start, ": ");
+        if (delim == NULL) {
+            printf("Invalid packet (headers)\n");
+            return;
+        }
+
+        request_add_header_n(req, header_start, delim - header_start, delim + 2,
+                             header_end - (delim + 2));
+        header_start = header_end + 2;
+    }
+
+    // Fill in content type and length
+    req->content_type = get_header_value_request(req, "Content-Type");
+    req->content_length = atoi(get_header_value_request(req, "Content-Length"));
+
+    return;
+};

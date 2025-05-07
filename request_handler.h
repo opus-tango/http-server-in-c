@@ -5,8 +5,7 @@
 #include <string.h>
 #include <sys/types.h>
 
-typedef struct http_request http_request;
-typedef struct http_response http_response;
+#include "http_stuff.h"
 
 void handle_request(char* request, int length, char* response,
                     size_t* response_length);
