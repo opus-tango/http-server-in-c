@@ -43,26 +43,37 @@ http_response* free_http_response(http_response* res) {
 }
 
 void print_http_request(http_request* req) {
-    printf("Method: %s\n", req->method);
-    printf("URL: %s\n", req->url);
+    if (req == NULL) {
+        printf("Attempting to print NULL request\n");
+        return;
+    }
+    if (req->method == NULL) {
+    }
+    printf("Method: %s\n", (req->method == NULL) ? "" : req->method);
+    printf("URL: %s\n", (req->url == NULL) ? "" : req->url);
     printf("Headers:\n");
     for (int i = 0; i < req->num_headers; i++) {
-        printf("%s: %s\n", req->headers[i].key, req->headers[i].value);
+        printf("%s: %s\n",
+               (req->headers[i].key == NULL) ? "" : req->headers[i].key,
+               (req->headers[i].value == NULL) ? "" : req->headers[i].value);
     }
-    printf("Content-Type: %s\n", req->content_type);
+    printf("Content-Type: %s\n",
+           (req->content_type == NULL) ? "" : req->content_type);
     printf("Content-Length: %zu\n", req->content_length);
-    printf("Body:\n%s\n", req->body);
+    printf("Body:\n%s\n", (req->body == NULL) ? "" : req->body);
 }
 
 void print_http_response(http_response* res) {
-    printf("Status Line: %s\n", res->status_line);
+    printf("Status Line: %s\n",
+           (res->status_line == NULL) ? "" : res->status_line);
     printf("Headers:\n");
     for (int i = 0; i < res->num_headers; i++) {
         printf("%s: %s\n", res->headers[i].key, res->headers[i].value);
     }
-    printf("Content-Type: %s\n", res->content_type);
+    printf("Content-Type: %s\n",
+           (res->content_type == NULL) ? "" : res->content_type);
     printf("Content-Length: %zu\n", res->content_length);
-    printf("Body:\n%s\n", res->body);
+    printf("Body:\n%s\n", (res->body == NULL) ? "" : res->body);
 }
 
 char* reponse_to_string(http_response* res) {
