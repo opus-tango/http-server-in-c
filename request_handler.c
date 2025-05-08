@@ -18,11 +18,8 @@ void handle_request(char* request, int length, char* response,
     http_request* req = create_http_request();
     parse_http_request(request, length, req);
     print_http_request(req);
-    // request_info_print(req);
-
     printf("---------\n");
     free_http_request(req);
-    printf("req pointer value: %d\n", (int)req);
 
     // Create reponse string
     char* ptr_temp = response;
@@ -30,37 +27,6 @@ void handle_request(char* request, int length, char* response,
         "HTTP/1.1 200 OK\r\nContent-Type: text/html \r\nContent-Length: "
         "0\r\n\r\n\0";
     strcpy(ptr_temp, temp);
-    // while (*temp != '\0') {
-    //     *ptr_temp = *temp;
-    //     ptr_temp++;
-    //     temp++;
-    // }
-    // // Put content length in the html response
-    // int content_length = strlen(filename);
-    // char content_length_str[10];
-    // sprintf(content_length_str, "%d", content_length);
-    // temp = (char*)&content_length_str;
-    // while (*temp != '\0') {
-    //     *ptr_temp = *temp;
-    //     ptr_temp++;
-    //     temp++;
-    // }
-    // // Terminate header
-    // temp = "\r\n\r\n\0";
-    // while (*temp != '\0') {
-    //     *ptr_temp = *temp;
-    //     ptr_temp++;
-    //     temp++;
-    // }
-    // // Put the filename in the html response
-    // temp = filename;
-    // while (*temp != '\0') {
-    //     *ptr_temp = *temp;
-    //     ptr_temp++;
-    //     temp++;
-    // }
-
-    // *ptr_temp = '\0';  // Null terminate response
 
     printf("Response --------\n");
     printf("%s\n--------\n", response);
@@ -69,14 +35,12 @@ void handle_request(char* request, int length, char* response,
 }
 
 void parse_http_request(char* request, int length, struct http_request* req) {
-    // printf("Parsing request\n");
     // Get the end of the first line
     char* request_line_end = strstr(request, "\r\n");
     if (request_line_end == NULL) {
         printf("Invalid packet (end first line)\n");
         return;
     }
-    // printf("Parsed request line end\n");
 
     // Extract request type
     char* type_start = request;
@@ -88,7 +52,6 @@ void parse_http_request(char* request, int length, struct http_request* req) {
     req->method = (char*)malloc(type_end - type_start + 1);
     strncpy(req->method, type_start, type_end - type_start);
     req->method[type_end - type_start] = '\0';
-    // printf("Parsed request type\n");
 
     // Extract URL
     char* url_start = type_end + 1;
@@ -100,7 +63,6 @@ void parse_http_request(char* request, int length, struct http_request* req) {
     req->url = (char*)malloc(url_end - url_start + 1);
     strncpy(req->url, url_start, url_end - url_start);
     req->url[url_end - url_start] = '\0';
-    // printf("Parsed request url\n");
 
     // Extract headers
     char* headers_end = strstr(request_line_end + 2, "\r\n\r\n");
@@ -130,7 +92,6 @@ void parse_http_request(char* request, int length, struct http_request* req) {
                              header_end - (delim + 2));
         header_start = header_end + 2;
     }
-    // printf("Parsed request headers\n");
 
     // Fill in content type and length. In order to avoid a double free we copy
     // the content type instead of just pointing to the request header
@@ -138,7 +99,6 @@ void parse_http_request(char* request, int length, struct http_request* req) {
         malloc(strlen(get_header_value_request(req, "Content-Type")) + 1);
     strcpy(req->content_type, get_header_value_request(req, "Content-Type"));
     req->content_length = atoi(get_header_value_request(req, "Content-Length"));
-    // printf("Parsed request content type and length\n");
 
     return;
 };
