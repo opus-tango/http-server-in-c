@@ -23,23 +23,70 @@ http_response* create_http_response() {
     return res;
 }
 
-http_request* free_http_request(http_request* req) {
-    free(req->method);
-    free(req->url);
-    free(req->headers);
-    free(req->content_type);
-    free(req->body);
+void free_http_request(http_request* req) {
+    if (req == NULL) {
+        printf("Attempting to free NULL request\n");
+        return NULL;
+    }
+    if (req->method != NULL) {
+        printf("Freeing request method\n");
+        free(req->method);
+        req->method = NULL;
+    }
+    if (req->url != NULL) {
+        printf("Freeing request url\n");
+        free(req->url);
+        req->url = NULL;
+    }
+    if (req->headers != NULL) {
+        printf("Freeing request headers\n");
+        for (int i = 0; i < req->num_headers; i++) {
+            free(req->headers[i].key);
+            req->headers[i].key = NULL;
+            free(req->headers[i].value);
+            req->headers[i].value = NULL;
+        }
+        free(req->headers);
+        req->headers = NULL;
+    }
+    if (req->content_type != NULL) {
+        printf("Freeing request content type\n");
+        free(req->content_type);
+        req->content_type = NULL;
+    }
+    if (req->body != NULL) {
+        printf("Freeing request body\n");
+        free(req->body);
+        req->body = NULL;
+    }
+    printf("Freeing request\n");
     free(req);
-    return NULL;
+    req = NULL;
 }
 
-http_response* free_http_response(http_response* res) {
-    free(res->status_line);
-    free(res->headers);
-    free(res->content_type);
-    free(res->body);
+void free_http_response(http_response* res) {
+    if (res == NULL) {
+        printf("Attempting to free NULL response\n");
+        return NULL;
+    }
+    if (res->status_line != NULL) {
+        free(res->status_line);
+    }
+    if (res->headers != NULL) {
+        for (int i = 0; i < res->num_headers; i++) {
+            free(res->headers[i].key);
+            free(res->headers[i].value);
+        }
+        free(res->headers);
+    }
+    if (res->content_type != NULL) {
+        free(res->content_type);
+    }
+    if (res->body != NULL) {
+        free(res->body);
+    }
     free(res);
-    return NULL;
+    res = NULL;
 }
 
 void print_http_request(http_request* req) {
@@ -111,11 +158,13 @@ char* reponse_to_string(http_response* res) {
 }
 
 char* get_header_value_request(http_request* req, char* key) {
+    // printf("Getting header value for key: %s\n", key);
     for (int i = 0; i < req->num_headers; i++) {
         if (strcmp(req->headers[i].key, key) == 0) {
             return req->headers[i].value;
         }
     }
+    // printf("Header not found\n");
     return NULL;
 }
 
@@ -133,4 +182,17 @@ void request_add_header_n(http_request* req, char* key, size_t key_length,
 
 void request_add_header(http_request* req, char* key, char* value) {
     request_add_header_n(req, key, strlen(key), value, strlen(value));
+}
+
+void request_info_print(http_request* req) {
+    printf("Method: %d\n", (int)req->method);
+    printf("URL: %d\n", (int)req->url);
+    printf("Headers:\n");
+    for (int i = 0; i < req->num_headers; i++) {
+        printf("%d: %d\n", (int)req->headers[i].key,
+               (int)req->headers[i].value);
+    }
+    printf("Content-Type: %d\n", (int)req->content_type);
+    printf("Content-Length: %zu\n", req->content_length);
+    printf("Body:\n%d\n", (int)req->body);
 }

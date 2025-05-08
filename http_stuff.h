@@ -81,7 +81,7 @@ http_response* create_http_response();
  *
  * @return NULL
  */
-http_request* free_http_request(http_request* req);
+void free_http_request(http_request* req);
 
 /**
  * Frees the memory associated with an http_response struct. This function is
@@ -100,7 +100,7 @@ http_request* free_http_request(http_request* req);
  * @details
  *
  */
-http_response* free_http_response(http_response* res);
+void free_http_response(http_response* res);
 
 /**
  * Prints a formatted version of an http_request struct to stdout. This function
@@ -172,5 +172,7 @@ void request_add_header_n(http_request* req, char* key, size_t key_length,
  * calculate the length of the key and value.
  */
 void request_add_header(http_request* req, char* key, char* value);
+
+void request_info_print(http_request* req);
 
 #endif
