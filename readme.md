@@ -1,3 +1,8 @@
+## Final Project Plan Update - Thursday night (2025-05-08)
+The HTTP server has gotten much larger and more complex than I originally anticipated, and once I implement file uploading, it will meet all the requirements of the final project assignment. With that in mind, I have decided to scrap all my other plans and just submit the HTTP server as my final project, since I am also beginning to run out of time to develop a web application front and back end.
+
+This evening I finally worked through the bugs on handling file serving, and have been able to get it working with arbitrary file types. They are still restricted "for security reasons," but it can theoretically be expanded to any file type.
+
 ## Final Project Plan Update
 Even though I haven't had time to work on it, I have been turning this project over in my mind for the past two weeks. I have wanted to build my own basic HTTP server for a while, and this is the only piece of homework due this week, so I have decided to make my final project a basic HTTP server.
 
@@ -16,16 +21,15 @@ I also plan to publish this as a portfolio project for my resume.
 - [x] Finish code to parse HTTP requests
 - [x] Update makefile to be more flexible
 - [x] Add enums for method types
-- [ ] Add switch statement to handle different request types
-- [ ] Add functions to handle each request type
-- [ ] Finish code to build HTTP responses
-- [ ] Get html file serving working
-- [ ] Implement file uploads (with restricted file types)
-- [ ] Create basic templating engine for HTML working
+- [x] Add switch statement to handle different request types
+- [x] Add functions to handle each request type
+- [x] Finish code to build HTTP responses
+- [x] Get html file serving working
+- [ ] Make html page for uploading files
 - [ ] Get POST requests working
-- ~~[ ] Set up database (files or redis)~~
-- ~~[ ] Create car dealership "classes"~~
-- ~~[ ] Create car dealership app~~
+- [ ] Implement file uploads (with restricted file types)
+- [ ] Implement file indexing and serving a directory page
+- ~~[ ] Create basic templating engine for HTML working~~
 - [ ] Publish as a portfolio project
 
 
