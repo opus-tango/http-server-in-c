@@ -15,6 +15,9 @@ I also plan to publish this as a portfolio project for my resume.
 - [x] Fix existing bugs in socket handling and TCP buffering
 - [x] Finish code to parse HTTP requests
 - [x] Update makefile to be more flexible
+- [x] Add enums for method types
+- [ ] Add switch statement to handle different request types
+- [ ] Add functions to handle each request type
 - [ ] Finish code to build HTTP responses
 - [ ] Get html file serving working
 - [ ] Implement file uploads (with restricted file types)
