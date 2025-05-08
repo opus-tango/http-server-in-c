@@ -13,7 +13,7 @@
 struct sockaddr_in server_addr;
 #define DEBUG 1
 
-int main(int argc, char **argv) {
+int main() {
     // Create socket
     int server = socket(AF_INET, SOCK_STREAM, 0);
     if (server < 0) {
@@ -75,7 +75,7 @@ int main(int argc, char **argv) {
 
                 *client = accept(server, (struct sockaddr *)&client_addr,
                                  &client_len);
-                if (client < 0) {
+                if (*client < 0) {
                     perror("Failed to accept client");
                     continue;
                 }
