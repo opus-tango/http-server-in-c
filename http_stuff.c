@@ -115,7 +115,7 @@ void print_http_response(http_response* res) {
     printf("Body:\n%s\n", (res->body == NULL) ? "" : res->body);
 }
 
-char* reponse_to_string(http_response* res) {
+char* response_to_string(http_response* res) {
     // Define lengths
     int total_length = 0;
     int len_newline = strlen("\r\n");

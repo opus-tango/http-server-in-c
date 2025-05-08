@@ -54,7 +54,7 @@ void handle_request(char* request, int length, char* response,
 
     // Create response
 
-    // Create reponse string
+    // Create response string
     // char* ptr_temp = response;
     // char* temp =
     //     "HTTP/1.1 200 OK\r\nContent-Type: text/html \r\nContent-Length: "

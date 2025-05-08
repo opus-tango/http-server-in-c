@@ -61,7 +61,7 @@ void response_build_static_file(char* file_path, content_type content_type,
     fseek(file, 0, SEEK_SET);
 
     // Read file into buffer
-    unsigned char* file_buffer = (char*)malloc(file_size);
+    char* file_buffer = (char*)malloc(file_size);
     if (file_buffer == NULL) {
         printf("malloc failed\n");
         serve_500(res);

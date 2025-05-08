@@ -24,10 +24,11 @@ typedef enum {
 
 void response_handle_get(http_request* req, http_response* res);
 
-char* response_to_string(http_response* res);
+void response_build_static_file(char* file_path, content_type content_type,
+                                status_code status_code, http_response* res);
 
-void response_build_static_file(http_request* req, http_response* res);
+void serve_404(http_response* res);
 
-void serve_404(http_request* req, http_response* res);
+void serve_500(http_response* res);
 
 #endif

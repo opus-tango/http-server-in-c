@@ -137,7 +137,7 @@ void print_http_response(http_response* res);
  *
  * @return A pointer to the string representation of the response
  */
-char* reponse_to_string(http_response* res);
+char* response_to_string(http_response* res);
 
 /**
  * Finds the value associated with a given key in an http_request's headers.
