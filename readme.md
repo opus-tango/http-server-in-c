@@ -14,7 +14,7 @@ I also plan to publish this as a portfolio project for my resume.
 - [x] Get url parsing working
 - [x] Fix existing bugs in socket handling and TCP buffering
 - [x] Finish code to parse HTTP requests
-- [ ] Update makefile to be more flexible
+- [x] Update makefile to be more flexible
 - [ ] Finish code to build HTTP responses
 - [ ] Get html file serving working
 - [ ] Implement file uploads (with restricted file types)

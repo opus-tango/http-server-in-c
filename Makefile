@@ -1,20 +1,43 @@
-all: webserver.o client_handler.o request_handler.o http_stuff.o
-	gcc -o webserver.out *.o -lpthread
+# Compiler and flags
+CC = gcc
+DEBUG_FLAGS = -g -Wall -Wextra
+RELEASE_FLAGS = -Wall -Wextra
+LFLAGS = -lpthread
 
-debug:
-	gcc -g -o webserver.out webserver.c client_handler.h client_handler.c request_handler.h request_handler.c http_stuff.h http_stuff.c -lpthread
+# Source files
+SRCS = webserver.c client_handler.c request_handler.c http_stuff.c
 
-webserver: webserver.c
-	gcc -c webserver webserver.c
+# Object files definition
+OBJS = $(SRCS:.c=.o)
 
-client_handler: client_handler.c client_handler.h request_handler.h
-	gcc -c client_handler client_handler.c
+TARGET = webserver.out
 
-request_handler: request_handler.c request_handler.h http_stuff.h
-	gcc -c request_handler request_handler.c
 
-http_stuff: http_stuff.c http_stuff.h
-	gcc -c http_stuff http_stuff.c
+# BUILD STUFF
+
+# Default to debug
+all: debug
+
+debug: CFLAGS = $(DEBUG_FLAGS)
+debug: $(TARGET)
+
+release: CFLAGS = $(RELEASE_FLAGS)
+release: $(TARGET)
+
+# Link object files
+$(TARGET): $(OBJS)
+	$(CC) -o $(TARGET) $(OBJS) $(LFLAGS)
+
+# Compile object files
+%.o: %.c
+	$(CC) $(CFLAGS) -c $< -o $@
+
+# Object dependencies
+%.o: %.c
+	$(CC) $(CFLAGS) -c $< -o $@
 
 clean:
-	rm -f *.o *.out
+	rm -f $(OBJS)
+	rm -f $(TARGET)
+
+.PHONY: all debug release clean
