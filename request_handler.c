@@ -3,41 +3,19 @@
 void parse_http_request(char* request, int length, struct http_request* req);
 void debug_print_request(char* request);
 
-void handle_request(char* request, int length, char** response,
-                    size_t* response_length) {
+void handle_request(char* request, int length, http_response* response) {
     // Terminate request with EOF so strtok stops at end of string
     request[length] = EOF;
 
-    // printf("Request ---------\n");
-    // printf("%s\n---------\n", request);
-
-    // debug_print_request(request);
-
-    // printf("parsing request ---------\n");
     // Parse request into struct
     http_request* req = create_http_request();
     parse_http_request(request, length, req);
-    // print_http_request(req);
-    // printf("---------\n");
-    // request_info_print(req);
-    // free_http_request(req);
 
     // Switch statement to handle different request types
     switch (req->method) {
         case GET:
             // Build response
-            http_response* res = create_http_response();
-            response_handle_get(req, res);
-            // Convert response to string
-            char* response_string = response_to_string(res);
-            // Copy string to response
-            char* responsestr = (char*)malloc(strlen(response_string) + 1);
-            strcpy(responsestr, response_string);
-            *response = responsestr;
-            // Set response length
-            *response_length = strlen(response_string);
-            // Free response
-            free_http_response(res);
+            response_handle_get(req, response);
             break;
 
         case POST:

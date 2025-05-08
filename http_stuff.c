@@ -138,7 +138,7 @@ char* response_to_string(http_response* res) {
     total_length += strlen("Content-Length: ");
     total_length += strlen(content_lenth_str);
     total_length += len_crlf;
-    total_length += strlen(res->body);
+    total_length += res->content_length;
     total_length += len_crlf;
     total_length += 1;  // For null terminator
 
@@ -157,6 +157,48 @@ char* response_to_string(http_response* res) {
     strcat(response, content_lenth_str);
     strcat(response, "\r\n\r\n");
     strcat(response, res->body);
+    strcat(response, "\r\n\r\n");
+    return response;
+}
+
+char* response_headers_to_string(http_response* res) {
+    // Define lengths
+    int total_length = 0;
+    int len_newline = strlen("\r\n");
+    int len_crlf = strlen("\r\n\r\n");
+
+    char* content_lenth_str = (char*)malloc(10);
+    sprintf(content_lenth_str, "%zu", res->content_length);
+
+    // Calculate total length
+    total_length += strlen(res->status_line);
+    total_length += len_newline;
+    for (int i = 0; i < res->num_headers; i++) {
+        total_length += strlen(res->headers[i].key);
+        total_length += strlen(": ");
+        total_length += strlen(res->headers[i].value);
+        total_length += len_newline;
+    }
+    total_length += strlen(res->content_type);
+    total_length += len_newline;
+    total_length += strlen("Content-Length: ");
+    total_length += strlen(content_lenth_str);
+    total_length += len_crlf;
+    total_length += 1;  // For null terminator
+
+    char* response = (char*)malloc(total_length);
+    strcpy(response, res->status_line);
+    strcat(response, "\r\n");
+    for (int i = 0; i < res->num_headers; i++) {
+        strcat(response, res->headers[i].key);
+        strcat(response, ": ");
+        strcat(response, res->headers[i].value);
+        strcat(response, "\r\n");
+    }
+    strcat(response, res->content_type);
+    strcat(response, "\r\n");
+    strcat(response, "Content-Length: ");
+    strcat(response, content_lenth_str);
     strcat(response, "\r\n\r\n");
     return response;
 }

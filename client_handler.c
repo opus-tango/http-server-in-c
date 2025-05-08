@@ -28,14 +28,16 @@ void* client_handler(void* args) {
         buffer[bytes_read] = '\0';
 
         // Allocate space for response
-        char* response = NULL;
-        size_t response_length = BUFFER_SIZE;
+        http_response* response = create_http_response();
 
         // Handle request
-        handle_request(buffer, bytes_read, &response, &response_length);
+        handle_request(buffer, bytes_read, response);
 
         // Send response
-        send(client, response, response_length, 0);
+        char* headers = response_headers_to_string(response);
+        send(client, headers, strlen(headers), 0);
+        send(client, response->body, response->content_length, 0);
+        send(client, "\r\n", 2, 0);
 
         free(response);
         return NULL;

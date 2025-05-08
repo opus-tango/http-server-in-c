@@ -8,42 +8,28 @@ void response_handle_get(http_request* req, http_response* res) {
     strcat(file_path, req->url);
     printf("%s\n", file_path);
 
-    serve_404(res);
-    return;
-
     // Determine the file type
     char* ptr = file_path + strlen(file_path) - 1;
-    size_t etc_len = 0;
     while (*ptr != '.') {
-        etc_len++;
         ptr--;
     }
-    char* etc = (char*)malloc(etc_len + 1);
-    strncpy(etc, ptr, etc_len);
-    etc[etc_len] = '\0';
-    printf("%s\n", etc);
-    if (strcmp(etc, ".html") == 0) {
+    if (strcmp(ptr, ".html") == 0) {
         response_build_static_file(file_path, HTML, OK, res);
-    } else if (strcmp(etc, ".jpg") == 0) {
+    } else if (strcmp(ptr, ".jpg") == 0) {
         serve_404(res);
         return;
-    } else if (strcmp(etc, ".png") == 0) {
+    } else if (strcmp(ptr, ".png") == 0) {
+        response_build_static_file(file_path, PNG, OK, res);
+    } else if (strcmp(ptr, ".css") == 0) {
         serve_404(res);
         return;
-    } else if (strcmp(etc, ".css") == 0) {
-        serve_404(res);
-        return;
-    } else if (strcmp(etc, ".js") == 0) {
+    } else if (strcmp(ptr, ".js") == 0) {
         serve_404(res);
         return;
     } else {
         serve_404(res);
         return;
     }
-
-    // Serve 404 if file not found or file type not supported (html, jpg, png
-    // only)
-    // Serve the file
 }
 
 void response_build_static_file(char* file_path, content_type content_type,
@@ -145,6 +131,15 @@ void response_build_static_file(char* file_path, content_type content_type,
     }
     // Set content type string
     res->content_type = content_type_str;
+
+    // Add header for close connection
+    header_kv* close_connection = (header_kv*)malloc(sizeof(header_kv));
+    close_connection->key = (char*)malloc(strlen("Connection") + 1);
+    close_connection->value = (char*)malloc(strlen("close") + 1);
+    strcpy(close_connection->key, "Connection");
+    strcpy(close_connection->value, "close");
+    res->headers = close_connection;
+    res->num_headers = 1;
 }
 
 void serve_404(http_response* res) {

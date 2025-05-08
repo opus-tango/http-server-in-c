@@ -140,6 +140,19 @@ void print_http_response(http_response* res);
 char* response_to_string(http_response* res);
 
 /**
+ * Returns the string representation of an http_response struct WITHOUT the
+ * body. This function is meant to be used when sending a response over a
+ * socket. It allocates memory for the string and returns a pointer to it, so
+ * the caller is responsible for freeing the memory when it is no longer
+ * needed.
+ *
+ * @param res The response to convert to a string
+ *
+ * @return A pointer to the string representation of the response
+ */
+char* response_headers_to_string(http_response* res);
+
+/**
  * Finds the value associated with a given key in an http_request's headers.
  *
  * @param req The request to search
