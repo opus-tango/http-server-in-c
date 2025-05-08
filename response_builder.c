@@ -9,6 +9,7 @@ void response_handle_get(http_request* req, http_response* res) {
     printf("%s\n", file_path);
 
     serve_404(res);
+    return;
 
     // Determine the file type
     char* ptr = file_path + strlen(file_path) - 1;

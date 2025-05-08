@@ -3,7 +3,7 @@
 void parse_http_request(char* request, int length, struct http_request* req);
 void debug_print_request(char* request);
 
-void handle_request(char* request, int length, char* response,
+void handle_request(char* request, int length, char** response,
                     size_t* response_length) {
     // Terminate request with EOF so strtok stops at end of string
     request[length] = EOF;
@@ -13,12 +13,12 @@ void handle_request(char* request, int length, char* response,
 
     // debug_print_request(request);
 
-    printf("parsing request ---------\n");
+    // printf("parsing request ---------\n");
     // Parse request into struct
     http_request* req = create_http_request();
     parse_http_request(request, length, req);
-    print_http_request(req);
-    printf("---------\n");
+    // print_http_request(req);
+    // printf("---------\n");
     // request_info_print(req);
     // free_http_request(req);
 
@@ -31,8 +31,9 @@ void handle_request(char* request, int length, char* response,
             // Convert response to string
             char* response_string = response_to_string(res);
             // Copy string to response
-            response = (char*)malloc(strlen(response_string) + 1);
-            strcpy(response, response_string);
+            char* responsestr = (char*)malloc(strlen(response_string) + 1);
+            strcpy(responsestr, response_string);
+            *response = responsestr;
             // Set response length
             *response_length = strlen(response_string);
             // Free response

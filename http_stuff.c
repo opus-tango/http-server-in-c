@@ -144,6 +144,7 @@ char* response_to_string(http_response* res) {
 
     char* response = (char*)malloc(total_length);
     strcpy(response, res->status_line);
+    strcat(response, "\r\n");
     for (int i = 0; i < res->num_headers; i++) {
         strcat(response, res->headers[i].key);
         strcat(response, ": ");

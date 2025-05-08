@@ -28,11 +28,11 @@ void* client_handler(void* args) {
         buffer[bytes_read] = '\0';
 
         // Allocate space for response
-        char* response = (char*)malloc(BUFFER_SIZE);
+        char* response = NULL;
         size_t response_length = BUFFER_SIZE;
 
         // Handle request
-        handle_request(buffer, bytes_read, response, &response_length);
+        handle_request(buffer, bytes_read, &response, &response_length);
 
         // Send response
         send(client, response, response_length, 0);
