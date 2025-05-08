@@ -116,10 +116,15 @@ void print_http_response(http_response* res) {
 }
 
 char* reponse_to_string(http_response* res) {
+    // Define lengths
     int total_length = 0;
     int len_newline = strlen("\r\n");
     int len_crlf = strlen("\r\n\r\n");
 
+    char* content_lenth_str = (char*)malloc(10);
+    sprintf(content_lenth_str, "%zu", res->content_length);
+
+    // Calculate total length
     total_length += strlen(res->status_line);
     total_length += len_newline;
     for (int i = 0; i < res->num_headers; i++) {
@@ -129,6 +134,9 @@ char* reponse_to_string(http_response* res) {
         total_length += len_newline;
     }
     total_length += strlen(res->content_type);
+    total_length += len_newline;
+    total_length += strlen("Content-Length: ");
+    total_length += strlen(content_lenth_str);
     total_length += len_crlf;
     total_length += strlen(res->body);
     total_length += len_crlf;
@@ -143,6 +151,9 @@ char* reponse_to_string(http_response* res) {
         strcat(response, "\r\n");
     }
     strcat(response, res->content_type);
+    strcat(response, "\r\n");
+    strcat(response, "Content-Length: ");
+    strcat(response, content_lenth_str);
     strcat(response, "\r\n\r\n");
     strcat(response, res->body);
     strcat(response, "\r\n\r\n");
