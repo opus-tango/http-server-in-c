@@ -1,9 +1,11 @@
 ## Final Project Plan Update
 Even though I haven't had time to work on it, I have been turning this project over in my mind for the past two weeks. I have wanted to build my own basic HTTP server for a while, and this is the only piece of homework due this week, so I have decided to make my final project a basic HTTP server.
 
-I am also planning to create the car dealership app, but build it as a web app that uses my HTTP server, and modifies HTML and handles POST requests for the user interaction. 
+~~I am also planning to create the car dealership app, but build it as a web app that uses my HTTP server, and modifies HTML and handles POST requests for the user interaction.~~
+The project has ballooned in complexity, so I don't think I'm going to build an app on top of the server. [2025-05-07]
 
-I still have not decided whether to use files, or spin up a redis instance to store state, but I'll deal with that when I come to it.
+~~I still have not decided whether to use files, or spin up a redis instance to store state, but I'll deal with that when I come to it.~~
+The assignment requirements include file reading and writing, so I will not be using redis. I plan to add uploads and downloads as features for the server. [2025-05-07]
 
 I also plan to publish this as a portfolio project for my resume.
 
@@ -11,14 +13,16 @@ I also plan to publish this as a portfolio project for my resume.
 - [x] Get basic HTTP interaction working
 - [x] Get url parsing working
 - [x] Fix existing bugs in socket handling and TCP buffering
-- [ ] Finish code to parse HTTP requests
+- [x] Finish code to parse HTTP requests
+- [ ] Update makefile to be more flexible
 - [ ] Finish code to build HTTP responses
-- [ ] Get file serving working
+- [ ] Get html file serving working
+- [ ] Implement file uploads (with restricted file types)
 - [ ] Create basic templating engine for HTML working
 - [ ] Get POST requests working
-- [ ] Set up database (files or redis)
-- [ ] Create car dealership "classes"
-- [ ] Create car dealership app
+- ~~[ ] Set up database (files or redis)~~
+- ~~[ ] Create car dealership "classes"~~
+- ~~[ ] Create car dealership app~~
 - [ ] Publish as a portfolio project
 
 

@@ -11,7 +11,7 @@ void handle_request(char* request, int length, char* response,
     // printf("Request ---------\n");
     // printf("%s\n---------\n", request);
 
-    debug_print_request(request);
+    // debug_print_request(request);
 
     printf("parsing request ---------\n");
     // Parse request into struct
@@ -19,7 +19,7 @@ void handle_request(char* request, int length, char* response,
     parse_http_request(request, length, req);
     print_http_request(req);
     printf("---------\n");
-    request_info_print(req);
+    // request_info_print(req);
     free_http_request(req);
 
     // Create reponse string
