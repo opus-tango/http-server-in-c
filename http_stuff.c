@@ -2,7 +2,7 @@
 
 http_request* create_http_request() {
     http_request* req = (http_request*)malloc(sizeof(http_request));
-    req->method = NULL;
+    req->method_str = NULL;
     req->url = NULL;
     req->num_headers = 0;
     req->headers = NULL;
@@ -28,9 +28,9 @@ void free_http_request(http_request* req) {
         printf("Attempting to free NULL request\n");
         return;
     }
-    if (req->method != NULL) {
-        free(req->method);
-        req->method = NULL;
+    if (req->method_str != NULL) {
+        free(req->method_str);
+        req->method_str = NULL;
     }
     if (req->url != NULL) {
         free(req->url);
@@ -88,9 +88,7 @@ void print_http_request(http_request* req) {
         printf("Attempting to print NULL request\n");
         return;
     }
-    if (req->method == NULL) {
-    }
-    printf("Method: %s\n", (req->method == NULL) ? "" : req->method);
+    printf("Method: %s\n", (req->method_str == NULL) ? "" : req->method_str);
     printf("URL: %s\n", (req->url == NULL) ? "" : req->url);
     printf("Headers:\n");
     for (int i = 0; i < req->num_headers; i++) {

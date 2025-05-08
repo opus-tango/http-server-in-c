@@ -22,6 +22,19 @@ void handle_request(char* request, int length, char* response,
     // request_info_print(req);
     free_http_request(req);
 
+    // Switch statement to handle different request types
+    // switch (req->method)
+    // {
+    // case GET:
+    //     /* code */
+    //     break;
+
+    // default:
+    //     break;
+    // }
+
+    // Create response
+
     // Create reponse string
     char* ptr_temp = response;
     char* temp =
@@ -43,16 +56,31 @@ void parse_http_request(char* request, int length, struct http_request* req) {
         return;
     }
 
-    // Extract request type
+    // Extract request method
     char* type_start = request;
     char* type_end = strstr(type_start, " ");
     if (type_end == NULL) {
         printf("Invalid packet (method)\n");
         return;
     }
-    req->method = (char*)malloc(type_end - type_start + 1);
-    strncpy(req->method, type_start, type_end - type_start);
-    req->method[type_end - type_start] = '\0';
+    char* type = (char*)malloc(type_end - type_start + 1);
+    strncpy(type, type_start, type_end - type_start);
+    type[type_end - type_start] = '\0';
+    if (strcmp(type, "GET") == 0) {
+        req->method = GET;
+    } else if (strcmp(type, "POST") == 0) {
+        req->method = POST;
+    } else if (strcmp(type, "PUT") == 0) {
+        req->method = PUT;
+    } else if (strcmp(type, "DELETE") == 0) {
+        req->method = DELETE;
+    } else {
+        printf("Invalid packet (method)\n");
+        return;
+    }
+    req->method_str = (char*)malloc(type_end - type_start + 1);
+    strncpy(req->method_str, type_start, type_end - type_start);
+    req->method_str[type_end - type_start] = '\0';
 
     // Extract URL
     char* url_start = type_end + 1;

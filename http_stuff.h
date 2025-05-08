@@ -6,6 +6,13 @@
 #include <string.h>
 #include <sys/types.h>
 
+typedef enum {
+    GET,
+    POST,
+    PUT,
+    DELETE,
+} http_method;
+
 /**
  * Stores a key-value pair for http headers
  */
@@ -18,7 +25,8 @@ struct header_kv {
  * Stores an HTTP request
  */
 struct http_request {
-    char* method;
+    http_method method;
+    char* method_str;
     char* url;
     int num_headers;
     struct header_kv* headers;
