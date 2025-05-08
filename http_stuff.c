@@ -26,20 +26,17 @@ http_response* create_http_response() {
 void free_http_request(http_request* req) {
     if (req == NULL) {
         printf("Attempting to free NULL request\n");
-        return NULL;
+        return;
     }
     if (req->method != NULL) {
-        printf("Freeing request method\n");
         free(req->method);
         req->method = NULL;
     }
     if (req->url != NULL) {
-        printf("Freeing request url\n");
         free(req->url);
         req->url = NULL;
     }
     if (req->headers != NULL) {
-        printf("Freeing request headers\n");
         for (int i = 0; i < req->num_headers; i++) {
             free(req->headers[i].key);
             req->headers[i].key = NULL;
@@ -50,16 +47,13 @@ void free_http_request(http_request* req) {
         req->headers = NULL;
     }
     if (req->content_type != NULL) {
-        printf("Freeing request content type\n");
         free(req->content_type);
         req->content_type = NULL;
     }
     if (req->body != NULL) {
-        printf("Freeing request body\n");
         free(req->body);
         req->body = NULL;
     }
-    printf("Freeing request\n");
     free(req);
     req = NULL;
 }
@@ -67,7 +61,7 @@ void free_http_request(http_request* req) {
 void free_http_response(http_response* res) {
     if (res == NULL) {
         printf("Attempting to free NULL response\n");
-        return NULL;
+        return;
     }
     if (res->status_line != NULL) {
         free(res->status_line);
@@ -185,14 +179,26 @@ void request_add_header(http_request* req, char* key, char* value) {
 }
 
 void request_info_print(http_request* req) {
-    printf("Method: %d\n", (int)req->method);
-    printf("URL: %d\n", (int)req->url);
+    printf("Method: %p\n", (int*)req->method);
+    printf("URL: %p\n", (int*)req->url);
     printf("Headers:\n");
     for (int i = 0; i < req->num_headers; i++) {
-        printf("%d: %d\n", (int)req->headers[i].key,
-               (int)req->headers[i].value);
+        printf("%p: %p\n", (int*)req->headers[i].key,
+               (int*)req->headers[i].value);
     }
-    printf("Content-Type: %d\n", (int)req->content_type);
-    printf("Content-Length: %zu\n", req->content_length);
-    printf("Body:\n%d\n", (int)req->body);
+    printf("Content-Type: %p\n", (int*)req->content_type);
+    printf("Content-Length: %d\n", (int)req->content_length);
+    printf("Body:\n%p\n", (int*)req->body);
+}
+
+void autofill_content_meta(http_request* req) {
+    char* cptr = get_header_value_request(req, "Content-Type");
+    if (cptr != NULL) {
+        req->content_type = malloc(strlen(cptr) + 1);
+        strcpy(req->content_type, cptr);
+    }
+    cptr = get_header_value_request(req, "Content-Length");
+    if (cptr != NULL) {
+        req->content_length = atoi(cptr);
+    }
 }

@@ -19,6 +19,7 @@ void handle_request(char* request, int length, char* response,
     parse_http_request(request, length, req);
     print_http_request(req);
     printf("---------\n");
+    request_info_print(req);
     free_http_request(req);
 
     // Create reponse string
@@ -93,12 +94,14 @@ void parse_http_request(char* request, int length, struct http_request* req) {
         header_start = header_end + 2;
     }
 
-    // Fill in content type and length. In order to avoid a double free we copy
-    // the content type instead of just pointing to the request header
-    req->content_type =
-        malloc(strlen(get_header_value_request(req, "Content-Type")) + 1);
-    strcpy(req->content_type, get_header_value_request(req, "Content-Type"));
-    req->content_length = atoi(get_header_value_request(req, "Content-Length"));
+    // Autofill content metadata based on headers
+    autofill_content_meta(req);
+
+    // Extract body
+    char* body_start = headers_end + 4;
+    req->body = (char*)malloc(length - (body_start - request) + 1);
+    strncpy(req->body, body_start, length - (body_start - request));
+    req->body[length - (body_start - request)] = '\0';
 
     return;
 };

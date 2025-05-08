@@ -173,6 +173,30 @@ void request_add_header_n(http_request* req, char* key, size_t key_length,
  */
 void request_add_header(http_request* req, char* key, char* value);
 
+/**
+ * Prints out information about an HTTP request, in a way that is not
+ * particularly human-readable. This function is used for debugging
+ * purposes.
+ *
+ * @param req The request to print information about
+ */
 void request_info_print(http_request* req);
+
+/**
+ * Automatically fills in the Content-Type and Content-Length fields of the
+ * given http_request if they are not already set. This function is meant to be
+ * used when the content type and length are not known when the request is
+ * created, but are known when the request is processed.
+ *
+ * @param req The request whose Content-Type and Content-Length fields are to
+ * be filled in
+ *
+ * @details
+ * This function will search for the Content-Type and Content-Length headers in
+ * the request. If it finds either of them, it will copy the value of the header
+ * into the appropriate field in the request. If it does not find either of
+ * them, it does nothing.
+ */
+void autofill_content_meta(http_request* req);
 
 #endif
