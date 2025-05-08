@@ -6,6 +6,7 @@
 #include <sys/types.h>
 
 #include "http_stuff.h"
+#include "response_builder.h"
 
 void handle_request(char* request, int length, char* response,
                     size_t* response_length);

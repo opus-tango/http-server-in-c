@@ -20,32 +20,53 @@ void handle_request(char* request, int length, char* response,
     print_http_request(req);
     printf("---------\n");
     // request_info_print(req);
-    free_http_request(req);
+    // free_http_request(req);
 
     // Switch statement to handle different request types
-    // switch (req->method)
-    // {
-    // case GET:
-    //     /* code */
-    //     break;
+    switch (req->method) {
+        case GET:
+            // Build response
+            http_response* res = create_http_response();
+            response_handle_get(req, res);
+            // Convert response to string
+            char* response_string = response_to_string(res);
+            // Copy string to response
+            response = (char*)malloc(strlen(response_string) + 1);
+            strcpy(response, response_string);
+            // Set response length
+            *response_length = strlen(response_string);
+            // Free response
+            free_http_response(res);
+            break;
 
-    // default:
-    //     break;
-    // }
+        case POST:
+            /* code */
+            break;
+
+        case PUT:
+            /* code */
+            break;
+
+        case DELETE:
+            /* code */
+            break;
+    }
 
     // Create response
 
     // Create reponse string
-    char* ptr_temp = response;
-    char* temp =
-        "HTTP/1.1 200 OK\r\nContent-Type: text/html \r\nContent-Length: "
-        "0\r\n\r\n\0";
-    strcpy(ptr_temp, temp);
+    // char* ptr_temp = response;
+    // char* temp =
+    //     "HTTP/1.1 200 OK\r\nContent-Type: text/html \r\nContent-Length: "
+    //     "0\r\n\r\n\0";
+    // strcpy(ptr_temp, temp);
 
-    printf("Response --------\n");
-    printf("%s\n--------\n", response);
+    // printf("Response --------\n");
+    // printf("%s\n--------\n", response);
 
-    *response_length = strlen(response);
+    // *response_length = strlen(response);
+
+    free_http_request(req);
 }
 
 void parse_http_request(char* request, int length, struct http_request* req) {
