@@ -16,16 +16,13 @@ void response_handle_get(http_request* req, http_response* res) {
     if (strcmp(ptr, ".html") == 0) {
         response_build_static_file(file_path, HTML, OK, res);
     } else if (strcmp(ptr, ".jpg") == 0) {
-        serve_404(res);
-        return;
+        response_build_static_file(file_path, JPG, OK, res);
     } else if (strcmp(ptr, ".png") == 0) {
         response_build_static_file(file_path, PNG, OK, res);
     } else if (strcmp(ptr, ".css") == 0) {
-        serve_404(res);
-        return;
+        response_build_static_file(file_path, CSS, OK, res);
     } else if (strcmp(ptr, ".js") == 0) {
-        serve_404(res);
-        return;
+        response_build_static_file(file_path, JS, OK, res);
     } else {
         serve_404(res);
         return;
