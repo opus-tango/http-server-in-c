@@ -23,7 +23,7 @@ If you run the project on a remote server, you'll need to forward port 8080, cor
 - [x] Use Makefile - I started out with the Makefile format from class, but that quickly became too cumbersome to work with, and I could not get incremental builds to work with the debug flag for some reason, so I upgraded to pattern matching and conditional compilation. It's still basic as make files go, but this is a small project.
 - [x] Assignments via pointers - This used to be EVERYWHERE in this project, but as the complexity grew I started using string library functions more. See lines 50 - 57 of request_handler.c for an example of pointer assignment. You can also look at the early commit history to see if all over the place.
 - [x] Loop through array with ptr increment/decrement - Used to be everywhere, but the only example left is line 16 of response_builder.c. Still meets the requirement though.
-- [ ] No memory leaks
+- [x] No memory leaks - I have verified that the server does not leak memory by running Valgrind. There is a warning about a *possible* memory leak with `pthread_create`, but that's normal for multithreaded applications. Since the thread detaches successfully, the memory that Valgrind is worried about gets collected by the OS when the thread terminates.
 - [x] Reading and writing to files - Files are read every time a file is served; see response_build_static_file in response_builder.c. Files are written by the logger function in logging.c.
 - [x] Github - Everything is on github, and the commit history is EXTENSIVE.
 - [x] Switch statement - Used in response_build_static_file in response_builder.c and handle_request in request_handler.c.
