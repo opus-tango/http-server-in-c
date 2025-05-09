@@ -9,17 +9,21 @@
 #include <unistd.h>
 
 #include "client_handler.h"
+#include "logging.h"
 
 struct sockaddr_in server_addr;
 #define DEBUG 1
 
 int main() {
+    open_log_file();
+    set_log_level(DEBUG ? LOG_DEBUG : LOG_INFO);
     // Create socket
     int server = socket(AF_INET, SOCK_STREAM, 0);
     if (server < 0) {
-        perror("socket creation failed");
+        log_message(LOG_ERROR, "Socket creation failed");
         exit(1);
     }
+    log_message(LOG_INFO, "Socket created");
 
     // Socket address config
     server_addr.sin_family = AF_INET;
@@ -27,6 +31,7 @@ int main() {
     server_addr.sin_port = htons(8080);
     // Allow reuse of port when debugging
     if (DEBUG) {
+        log_message(LOG_DEBUG, "Allowing reuse of port");
         int reuse = 1;
         setsockopt(server, SOL_SOCKET, SO_REUSEADDR, &reuse, sizeof(int));
     }
@@ -34,13 +39,13 @@ int main() {
     // Bind socket
     if (bind(server, (struct sockaddr *)&server_addr, sizeof(server_addr)) <
         0) {
-        perror("bind failed");
+        log_message(LOG_ERROR, "Socket bind failed");
         exit(1);
     }
 
     // Listen for connections
     if (listen(server, 5) < 0) {
-        perror("listen failed");
+        log_message(LOG_ERROR, "Socket listen failed");
         exit(1);
     }
 
@@ -62,7 +67,7 @@ int main() {
                 if (c == 'q') {
                     close(server);
                     shutdown(server, SHUT_RDWR);
-                    printf("Server closed\n");
+                    log_message(LOG_INFO, "Shutting down server");
                     break;
                 }
             }
@@ -76,7 +81,7 @@ int main() {
                 *client = accept(server, (struct sockaddr *)&client_addr,
                                  &client_len);
                 if (*client < 0) {
-                    perror("Failed to accept client");
+                    log_message(LOG_ERROR, "Socket accept failed");
                     continue;
                 }
 
@@ -86,6 +91,6 @@ int main() {
             }
         }
     }
-
+    close_log_file();
     return 0;
 }

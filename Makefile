@@ -5,7 +5,7 @@ RELEASE_FLAGS = -Wall -Wextra
 LFLAGS = -lpthread
 
 # Source files
-SRCS = webserver.c client_handler.c request_handler.c http_stuff.c response_builder.c
+SRCS = webserver.c client_handler.c request_handler.c http_stuff.c response_builder.c logging.c
 
 # Object files definition
 OBJS = $(SRCS:.c=.o)
