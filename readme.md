@@ -14,9 +14,10 @@ The project is designed to be very straightforward to run. It includes a Makefil
 
 1. Make sure docker is installed on your system.
 2. Clone the repository by running `git clone https://github.com/COS135-S2025/project-GShadow5.git`
-2. Run the container by running `docker compose up` in the project root directory. (command may be `docker-compose up` on some versions and platforms)
+3. Run the container by running `docker compose up` in the project root directory. (command may be `docker-compose up` on some versions and platforms)
 4. Navigate to http://localhost:8080/index.html in your browser.
 5. Navigate to other files found in the `public` directory, such as http://localhost:8080/image.png and http://localhost:8080/script.js
+6. To stop the server you can hit ctrl+c in the terminal, or type `q` and hit enter.
 
 ### Building from source
 
@@ -25,6 +26,7 @@ The project is designed to be very straightforward to run. It includes a Makefil
 3. Run the server by running `./webserver.out` in the project root directory.
 4. Navigate to http://localhost:8080/index.html in your browser.
 5. Navigate to other files found in the `public` directory, such as http://localhost:8080/image.png and http://localhost:8080/script.js
+6. To stop the server you can hit ctrl+c in the terminal, or type `q` and hit enter.
 
 
 
@@ -68,6 +70,11 @@ There are three major things not taught in class that are core to this project.
 - ~~[ ] Implement file indexing and serving a directory page~~
 - ~~[ ] Create basic templating engine for HTML working~~
 - [ ] Publish as a portfolio project
+
+## Known issues
+There is an issue where the CSS file is not being received properly when included in an HTML file on Firefox based browsers. It works fine on Chromium based browsers, and Firefox loads the CSS file just fine when loaded directly, so I'm not sure what the issue is. If Firefox is behaving strangely try it with something Chromium based.
+
+I have not debugged the issue yet becayse I'm not hung up on broad compatability for the scale that this project is at, and it works fine on Chromium browsers.
 
 
 ## References
