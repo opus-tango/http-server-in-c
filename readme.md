@@ -10,10 +10,11 @@ In hindsight there were a lot of decisions I would make differently around code 
 
 The project is designed to be very straightforward to run. It should work on any linux system with build essentials. I have used Ubuntu for development.
 
-1. Build the project by running `make` in the project root directory (where the Makefile is).
-2. Run the server by running `./webserver.out` in the project root directory.
-3. Navigate to http://localhost:8080/index.html in your browser.
-4. Navigate to other files found in the `public` directory, such as http://localhost:8080/image.png and http://localhost:8080/script.js
+1. Clone the repository by running `git clone https://github.com/COS135-S2025/project-GShadow5.git`
+2. Build the project by running `make` in the project root directory (where the Makefile is).
+3. Run the server by running `./webserver.out` in the project root directory.
+4. Navigate to http://localhost:8080/index.html in your browser.
+5. Navigate to other files found in the `public` directory, such as http://localhost:8080/image.png and http://localhost:8080/script.js
 
 #### Note
 If you run the project on a remote server, you'll need to forward port 8080, correctly configure your firewall, and use the external IP address of the server instead of localhost. The details of remote hosting are out of scope for these instructions.
