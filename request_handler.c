@@ -1,6 +1,7 @@
 #include "request_handler.h"
 
 void handle_request(char* request, int length, http_response* response) {
+    log_message(LOG_DEBUG, "Handling request");
     // Parse request into struct
     http_request* req = create_http_request();
     parse_http_request(request, length, req);
@@ -28,6 +29,7 @@ void handle_request(char* request, int length, http_response* response) {
 }
 
 void parse_http_request(char* request, int length, struct http_request* req) {
+    log_message(LOG_DEBUG, "Parsing request");
     // Get the end of the first line
     char* request_line_end = strstr(request, "\r\n");
     if (request_line_end == NULL) {

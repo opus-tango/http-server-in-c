@@ -18,6 +18,7 @@
  * handle_request.
  */
 void* client_handler(void* args) {
+    log_message(LOG_DEBUG, "Client handler started");
     // Cast args
     int client = *((int*)args);
     char* buffer = (char*)malloc(BUFFER_SIZE);

@@ -1,6 +1,7 @@
 #include "response_builder.h"
 
 void response_handle_get(http_request* req, http_response* res) {
+    log_message(LOG_DEBUG, "Handling GET request");
     log_message(LOG_INFO, "GET request %s", req->url);
     // Extract the path from the request URL
     char* basepath = "./public";
@@ -50,6 +51,7 @@ void response_handle_put(http_request* req, http_response* res) {
 
 void response_build_static_file(char* file_path, content_type content_type,
                                 status_code status_code, http_response* res) {
+    log_message(LOG_DEBUG, "Building static file response");
     // Open the file and verify that the file exists
     FILE* file = fopen(file_path, "rb");
     if (file == NULL) {
