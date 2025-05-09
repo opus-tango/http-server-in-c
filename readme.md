@@ -8,7 +8,7 @@ In hindsight there were a lot of decisions I would make differently around code 
 
 ## How to use
 
-The project is designed to be very straightforward to run. It includes a Makefile and a Dockerfile. It should work on any linux system with build essentials. I have used Ubuntu for development. If you are unsure of your environment or running on a non-linux system, the running it in a docker container is the easiest way to go.
+The project is designed to be very straightforward to run. It includes a Makefile and a Dockerfile. It should work on any linux system with build-essential. I have used Ubuntu for development. If you are unsure of your environment or running on a non-linux system, the running it in a docker container is the easiest way to go.
 
 ### Deploying as a docker container
 
@@ -21,7 +21,8 @@ The project is designed to be very straightforward to run. It includes a Makefil
 
 ### Building from source
 
-1. Clone the repository by running `git clone https://github.com/COS135-S2025/project-GShadow5.git`
+1. If gcc and make are not installed, install them by running `sudo apt-get install build-essential`
+2. Clone the repository by running `git clone https://github.com/COS135-S2025/project-GShadow5.git`
 2. Build the project by running `make` in the project root directory (where the Makefile is).
 3. Run the server by running `./webserver.out` in the project root directory.
 4. Navigate to http://localhost:8080/index.html in your browser.
