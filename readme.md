@@ -65,11 +65,11 @@ There are three major things not taught in class that are core to this project.
 - [x] Finish code to build HTTP responses
 - [x] Get html file serving working
 - [x] Add flexible logging with variadic arguments
-- ~~[ ] Make html page for uploading files~~
-- ~~[ ] Get POST requests working~~
-- ~~[ ] Implement file uploads (with restricted file types)~~
-- ~~[ ] Implement file indexing and serving a directory page~~
-- ~~[ ] Create basic templating engine for HTML working~~
+- [ ] ~~Make html page for uploading files~~
+- [ ] ~~Get POST requests working~~
+- [ ] ~~Implement file uploads (with restricted file types)~~
+- [ ] ~~Implement file indexing and serving a directory page~~
+- [ ] ~~Create basic templating engine for HTML working~~
 - [ ] Publish as a portfolio project
 
 ## Known issues
