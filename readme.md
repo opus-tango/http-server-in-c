@@ -1,22 +1,41 @@
-## Final Project Plan Update - Thursday night (2025-05-08)
-The HTTP server has gotten much larger and more complex than I originally anticipated, and once I implement file uploading, it will meet all the requirements of the final project assignment. With that in mind, I have decided to scrap all my other plans and just submit the HTTP server as my final project, since I am also beginning to run out of time to develop a web application front and back end.
+# Simple HTTP Server
 
-This evening I finally worked through the bugs on handling file serving, and have been able to get it working with arbitrary file types. They are still restricted "for security reasons," but it can theoretically be expanded to any file type.
+This project is a simple HTTP server that can serve static files. I had big plans for POST request support, a templating engine, and backend features, but just serving files turns out to be quite a lot of work, and I unfortunately ran out of time.
 
-The server does not handle routes, only raw file paths, and also does not include the templating engine that I was planning to include, but I simply ran out of time. After doing a little research I have also decided to scrap the idea of implementing file uploading, since parsing streamed files is a lot more complex than I can tackle in the time I have left.
+I was originally going to make a simple toy car dealership application for my final project, but I've wanted to write an HTTP server for a while, and since I had the time I decided to give it a shot. I'm proud that I was able to accomplish all this in just four days, especially since the basic file serving feature ballooned in complexity faster than I expected.
 
-I will implement logging to a log file to satisfy the file writing requirement.
+In hindsight there were a lot of decisions I would make differently around code architecture and organization, but I learned so, SO, much doing this project. It has definitely been worth the effort and mistakes even if it's a litte rough around the edges.
 
-## Final Project Plan Update
-Even though I haven't had time to work on it, I have been turning this project over in my mind for the past two weeks. I have wanted to build my own basic HTTP server for a while, and this is the only piece of homework due this week, so I have decided to make my final project a basic HTTP server.
+## How to use
 
-~~I am also planning to create the car dealership app, but build it as a web app that uses my HTTP server, and modifies HTML and handles POST requests for the user interaction.~~
-The project has ballooned in complexity, so I don't think I'm going to build an app on top of the server. [2025-05-07]
+The project is designed to be very straightforward to run. It should work on any linux system with build essentials. I have used Ubuntu for development.
 
-~~I still have not decided whether to use files, or spin up a redis instance to store state, but I'll deal with that when I come to it.~~
-The assignment requirements include file reading and writing, so I will not be using redis. I plan to add uploads and downloads as features for the server. [2025-05-07]
+1. Build the project by running `make` in the project root directory (where the Makefile is).
+2. Run the server by running `./webserver.out` in the project root directory.
+3. Navigate to http://localhost:8080/index.html in your browser.
+4. Navigate to other files found in the `public` directory, such as http://localhost:8080/image.png and http://localhost:8080/script.js
 
-I also plan to publish this as a portfolio project for my resume.
+#### Note
+If you run the project on a remote server, you'll need to forward port 8080, correctly configure your firewall, and use the external IP address of the server instead of localhost. The details of remote hosting are out of scope for these instructions.
+
+## Assignment checklist
+- [x] Use malloc LL or dynamic array - See the header_kv array in the http_request struct in http_stuff.h and http_stuff.c
+- [x] Use Makefile - I started out with the Makefile format from class, but that quickly became too cumbersome to work with, and I could not get incremental builds to work with the debug flag for some reason, so I upgraded to pattern matching and conditional compilation. It's still basic as make files go, but this is a small project.
+- [x] Assignments via pointers - This used to be EVERYWHERE in this project, but as the complexity grew I started using string library functions more. See lines 50 - 57 of request_handler.c for an example of pointer assignment. You can also look at the early commit history to see if all over the place.
+- [x] Loop through array with ptr increment/decrement - Used to be everywhere, but the only example left is line 16 of response_builder.c. Still meets the requirement though.
+- [ ] No memory leaks
+- [x] Reading and writing to files - Files are read every time a file is served; see response_build_static_file in response_builder.c. Files are written by the logger function in logging.c.
+- [x] Github - Everything is on github, and the commit history is EXTENSIVE.
+- [x] Switch statement - Used in response_build_static_file in response_builder.c and handle_request in request_handler.c.
+- [x] Something not taught in class - See below
+
+### Something[s] not taught in class
+There are three major things not taught in class that are core to this project. 
+
+1. The first is networking. It's an HTTP server and uses sockets to communicate. I've experimented with sockets before a few years ago before college, but this was the first time really digging into them.
+2. The second is multithreading. I am quite comfortable with multithreading because of some of my higher level classes, and I enjoy it a lot. Definitely not something typically taught in a 100 level class.
+3. Variadic arguments. I've never used variadic arguments before, but it was SUPER cool to find out I could make my own logging system. I've always wanted to do that, but most of the time I've been working in higher level languages that make it a nightmare. Variadic arguments are a awesome!
+
 
 ## TODO List
 - [x] Get basic HTTP interaction working
@@ -29,48 +48,20 @@ I also plan to publish this as a portfolio project for my resume.
 - [x] Add functions to handle each request type
 - [x] Finish code to build HTTP responses
 - [x] Get html file serving working
-- [ ] Make html page for uploading files
-- [ ] Get POST requests working
-- [ ] Implement file uploads (with restricted file types)
-- [ ] Implement file indexing and serving a directory page
+- [x] Add flexible logging with variadic arguments
+- ~~[ ] Make html page for uploading files~~
+- ~~[ ] Get POST requests working~~
+- ~~[ ] Implement file uploads (with restricted file types)~~
+- ~~[ ] Implement file indexing and serving a directory page~~
 - ~~[ ] Create basic templating engine for HTML working~~
 - [ ] Publish as a portfolio project
 
 
-
-## Original Plan
-I'm going to build a car dealership interface.
-
-You can log in as a dealer or buyer. Both have inventories, but only dealers can add cars, and only buyers can add money. Buyers can buy cars from dealers. There are two files, one for users and one for transactions, that store the state of the system between sessions.
-
-Malloc will be used to store the dynamic arrays. String handling with pointers will be used to deal with user input. All structs will come with constructors and destructors. The state of the program will be generated from the state of the files at startup, and will be saved to the files as changes occur in the program. A switch statement will be used to handle user input.
-
-For the stretch goal I am considering making two programs, a "server" and a "client," so that multiple users can connect to the "server" concurrently with IPC. Alternatively, maybe make a nice colorized autocomplete interface.
-
-Structs:
-- Car struct
-    - id
-    - make
-    - model
-    - year
-    - price
-    - color
-- User struct
-    - id
-    - username
-    - password hash
-    - user type (buyer, dealer)
-    - list of cars
-    - list of transaction ids (maybe)
-    - money
-- Transaction struct
-    - id
-    - date
-    - car id
-    - buyer id
-    - seller id
-    - price
-
-Files:
-- Transactions file
-- Users file
+## References
+- [HTTP status codes](https://developer.mozilla.org/en-US/docs/Web/HTTP/Reference/Status)
+- [How I built a simple HTTP server from scratch using C](https://dev.to/jeffreythecoder/how-i-built-a-simple-http-server-from-scratch-using-c-739): I used this to understand how to get started, but exapanded from it a lot.
+- [strtok reference](https://www.geeksforgeeks.org/strtok-strtok_r-functions-c-examples/): Didn't end up using strtok, but it was one of the approaches I tried for parsing the incoming requests.
+- Variadic arguments references:
+    - [Variadic functions in C](https://www.geeksforgeeks.org/variadic-functions-in-c/)
+    - [How to create function like printf](https://stackoverflow.com/questions/7031116/how-to-create-function-like-printf-variable-argument)
+- I did not use any references for multithreading as I have used pthreads extensively for the last few semesters.
