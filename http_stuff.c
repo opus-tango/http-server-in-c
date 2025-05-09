@@ -233,7 +233,6 @@ char* get_header_value_request(http_request* req, char* key) {
 
 void request_add_header_n(http_request* req, char* key, size_t key_length,
                           char* value, size_t value_length) {
-    log_message(LOG_DEBUG, "Adding header %s: %s", key, value);
     req->num_headers++;
     req->headers = realloc(req->headers, req->num_headers * sizeof(header_kv));
     req->headers[req->num_headers - 1].key = malloc(key_length + 1);
@@ -242,6 +241,9 @@ void request_add_header_n(http_request* req, char* key, size_t key_length,
     memcpy(req->headers[req->num_headers - 1].value, value, value_length);
     req->headers[req->num_headers - 1].key[key_length] = '\0';
     req->headers[req->num_headers - 1].value[value_length] = '\0';
+    log_message(LOG_DEBUG, "Adding header %s: %s",
+                req->headers[req->num_headers - 1].key,
+                req->headers[req->num_headers - 1].value);
 }
 
 void request_add_header(http_request* req, char* key, char* value) {
