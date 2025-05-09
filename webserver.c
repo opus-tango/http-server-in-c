@@ -92,9 +92,15 @@ int main() {
                     continue;
                 }
 
+                pthread_attr_t attr;
+                pthread_attr_init(&attr);
+                pthread_attr_setdetachstate(&attr, PTHREAD_CREATE_DETACHED);
+
                 pthread_t thread;
-                pthread_create(&thread, NULL, client_handler, (void *)client);
+                pthread_create(&thread, &attr, client_handler, (void *)client);
                 pthread_detach(thread);
+
+                pthread_attr_destroy(&attr);
             }
         }
     }
