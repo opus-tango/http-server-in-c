@@ -19,7 +19,12 @@
 #include "logging.h"
 
 struct sockaddr_in server_addr;
+
+#ifndef NDEBUG
 #define DEBUG 1
+#else
+#define DEBUG 0
+#endif
 
 int main() {
     open_log_file();

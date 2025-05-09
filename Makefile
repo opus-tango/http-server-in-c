@@ -1,7 +1,7 @@
 # Compiler and flags
 CC = gcc
 DEBUG_FLAGS = -g -Wall -Wextra
-RELEASE_FLAGS = -Wall -Wextra
+RELEASE_FLAGS = -Wall -Wextra -DNDEBUG
 LFLAGS = -lpthread
 
 # Source files
