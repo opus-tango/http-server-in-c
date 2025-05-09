@@ -78,3 +78,4 @@ There are three major things not taught in class that are core to this project.
     - [Variadic functions in C](https://www.geeksforgeeks.org/variadic-functions-in-c/)
     - [How to create function like printf](https://stackoverflow.com/questions/7031116/how-to-create-function-like-printf-variable-argument)
 - I did not use any references for multithreading as I have used pthreads extensively for the last few semesters.
+- [Makefile reference](https://www.gnu.org/software/make/manual/html_node/index.html): Used a bunch of this to understand how to write more complex makefiles.
