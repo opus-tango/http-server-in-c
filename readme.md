@@ -8,7 +8,17 @@ In hindsight there were a lot of decisions I would make differently around code 
 
 ## How to use
 
-The project is designed to be very straightforward to run. It should work on any linux system with build essentials. I have used Ubuntu for development.
+The project is designed to be very straightforward to run. It includes a Makefile and a Dockerfile. It should work on any linux system with build essentials. I have used Ubuntu for development. If you are unsure of your environment or running on a non-linux system, the running it in a docker container is the easiest way to go.
+
+### Deploying as a docker container
+
+1. Make sure docker is installed on your system.
+2. Clone the repository by running `git clone https://github.com/COS135-S2025/project-GShadow5.git`
+2. Run the container by running `docker compose up` in the project root directory. (command may be `docker-compose up` on some versions and platforms)
+4. Navigate to http://localhost:8080/index.html in your browser.
+5. Navigate to other files found in the `public` directory, such as http://localhost:8080/image.png and http://localhost:8080/script.js
+
+### Building from source
 
 1. Clone the repository by running `git clone https://github.com/COS135-S2025/project-GShadow5.git`
 2. Build the project by running `make` in the project root directory (where the Makefile is).
@@ -16,7 +26,9 @@ The project is designed to be very straightforward to run. It should work on any
 4. Navigate to http://localhost:8080/index.html in your browser.
 5. Navigate to other files found in the `public` directory, such as http://localhost:8080/image.png and http://localhost:8080/script.js
 
-#### Note
+
+
+### Note on running on a remote server
 If you run the project on a remote server, you'll need to forward port 8080, correctly configure your firewall, and use the external IP address of the server instead of localhost. The details of remote hosting are out of scope for these instructions.
 
 ## Assignment checklist
