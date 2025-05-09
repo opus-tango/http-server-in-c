@@ -6,6 +6,8 @@
 #include <string.h>
 #include <sys/types.h>
 
+#include "logging.h"
+
 typedef enum {
     GET,
     POST,
@@ -111,6 +113,7 @@ void free_http_request(http_request* req);
 void free_http_response(http_response* res);
 
 /**
+ * DEPRECATED
  * Prints a formatted version of an http_request struct to stdout. This function
  * is meant to be used for debugging purposes.
  *
@@ -119,6 +122,7 @@ void free_http_response(http_response* res);
 void print_http_request(http_request* req);
 
 /**
+ * DEPRECATED
  * Prints a formatted version of an http_response struct to stdout. This
  * function is meant to be used for debugging purposes.
  *

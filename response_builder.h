@@ -6,6 +6,7 @@
 #include <sys/types.h>
 
 #include "http_stuff.h"
+#include "logging.h"
 
 typedef enum {
     HTML,

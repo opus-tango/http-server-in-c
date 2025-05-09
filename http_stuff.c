@@ -25,7 +25,7 @@ http_response* create_http_response() {
 
 void free_http_request(http_request* req) {
     if (req == NULL) {
-        printf("Attempting to free NULL request\n");
+        log_message(LOG_INFO, "Attempting to free NULL request");
         return;
     }
     if (req->method_str != NULL) {
@@ -60,7 +60,7 @@ void free_http_request(http_request* req) {
 
 void free_http_response(http_response* res) {
     if (res == NULL) {
-        printf("Attempting to free NULL response\n");
+        log_message(LOG_INFO, "Attempting to free NULL response");
         return;
     }
     if (res->status_line != NULL) {
@@ -84,10 +84,12 @@ void free_http_response(http_response* res) {
 }
 
 void print_http_request(http_request* req) {
+    log_message(LOG_WARN, "Deprecated function 'print_http_request' called");
     if (req == NULL) {
-        printf("Attempting to print NULL request\n");
+        log_message(LOG_INFO, "Attempting to print NULL request");
         return;
     }
+
     printf("Method: %s\n", (req->method_str == NULL) ? "" : req->method_str);
     printf("URL: %s\n", (req->url == NULL) ? "" : req->url);
     printf("Headers:\n");
@@ -103,6 +105,7 @@ void print_http_request(http_request* req) {
 }
 
 void print_http_response(http_response* res) {
+    log_message(LOG_WARN, "Deprecated function 'print_http_response' called");
     printf("Status Line: %s\n",
            (res->status_line == NULL) ? "" : res->status_line);
     printf("Headers:\n");
@@ -116,6 +119,7 @@ void print_http_response(http_response* res) {
 }
 
 char* response_to_string(http_response* res) {
+    log_message(LOG_DEBUG, "Converting entire response to string");
     // Define lengths
     int total_length = 0;
     int len_newline = strlen("\r\n");
@@ -162,6 +166,7 @@ char* response_to_string(http_response* res) {
 }
 
 char* response_headers_to_string(http_response* res) {
+    log_message(LOG_DEBUG, "Generating response headers string");
     // Define lengths
     int total_length = 0;
     int len_newline = strlen("\r\n");
@@ -204,18 +209,19 @@ char* response_headers_to_string(http_response* res) {
 }
 
 char* get_header_value_request(http_request* req, char* key) {
-    // printf("Getting header value for key: %s\n", key);
+    log_message(LOG_DEBUG, "Getting header value for %s", key);
     for (int i = 0; i < req->num_headers; i++) {
         if (strcmp(req->headers[i].key, key) == 0) {
             return req->headers[i].value;
         }
     }
-    // printf("Header not found\n");
+    log_message(LOG_WARN, "Header %s not found\n", key);
     return NULL;
 }
 
 void request_add_header_n(http_request* req, char* key, size_t key_length,
                           char* value, size_t value_length) {
+    log_message(LOG_DEBUG, "Adding header %s: %s", key, value);
     req->num_headers++;
     req->headers = realloc(req->headers, req->num_headers * sizeof(header_kv));
     req->headers[req->num_headers - 1].key = malloc(key_length + 1);
@@ -230,20 +236,8 @@ void request_add_header(http_request* req, char* key, char* value) {
     request_add_header_n(req, key, strlen(key), value, strlen(value));
 }
 
-void request_info_print(http_request* req) {
-    printf("Method: %p\n", (int*)req->method);
-    printf("URL: %p\n", (int*)req->url);
-    printf("Headers:\n");
-    for (int i = 0; i < req->num_headers; i++) {
-        printf("%p: %p\n", (int*)req->headers[i].key,
-               (int*)req->headers[i].value);
-    }
-    printf("Content-Type: %p\n", (int*)req->content_type);
-    printf("Content-Length: %d\n", (int)req->content_length);
-    printf("Body:\n%p\n", (int*)req->body);
-}
-
 void autofill_content_meta(http_request* req) {
+    log_message(LOG_DEBUG, "Autofilling content metadata");
     char* cptr = get_header_value_request(req, "Content-Type");
     if (cptr != NULL) {
         req->content_type = malloc(strlen(cptr) + 1);
