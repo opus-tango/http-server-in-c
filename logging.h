@@ -1,3 +1,15 @@
+#ifndef LOGGING_H
+#define LOGGING_H
+
+/**
+ * logging.h
+ *
+ * This file contains functions for logging messages.
+ *
+ * Included functionality is opening and closing the log file, setting the log
+ * level, and logging messages
+ */
+
 #include <pthread.h>
 #include <stdarg.h>
 #include <stdio.h>
@@ -51,3 +63,5 @@ void close_log_file();
  * @param ... The variadic arguments to format the string with
  */
 void log_message(int level, const char* fmt, ...);
+
+#endif

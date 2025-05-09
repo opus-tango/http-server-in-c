@@ -1,3 +1,14 @@
+/**
+ * request_handler.c
+ *
+ * This file contains functions for handling an HTTP request and constructing
+ * an appropriate response.
+ *
+ * Included functionality is parsing the request into an http_request struct,
+ * and using a switch statement to call the appropriate response handler based
+ * on the request type.
+ */
+
 #include "request_handler.h"
 
 void handle_request(char* request, int length, http_response* response) {

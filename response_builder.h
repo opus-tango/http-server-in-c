@@ -1,6 +1,14 @@
 #ifndef RESPONSE_BUILDER_H
 #define RESPONSE_BUILDER_H
 
+/**
+ * response_builder.h
+ *
+ * This header files contains functions for building HTTP responses, and also
+ * contains the enum types for content types and status codes.
+ *
+ */
+
 #include <stdio.h>
 #include <string.h>
 #include <sys/types.h>

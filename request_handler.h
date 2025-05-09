@@ -1,6 +1,17 @@
 #ifndef REQUEST_HANDLER_H
 #define REQUEST_HANDLER_H
 
+/**
+ * request_handler.h
+ *
+ * This file contains functions for handling an HTTP request and constructing
+ * an appropriate response.
+ *
+ * Included functionality is parsing the request into an http_request struct,
+ * and using a switch statement to call the appropriate response handler based
+ * on the request type.
+ */
+
 #include <stdio.h>
 #include <string.h>
 #include <sys/types.h>

@@ -1,3 +1,10 @@
+/*
+ * webserver.c
+ *
+ * This file contains the main function for managing sockets, clients, user
+ * input, and threads.
+ */
+
 #include <netinet/in.h>
 #include <poll.h>
 #include <pthread.h>

@@ -5,6 +5,7 @@
         "random": "c",
         "request_handler.h": "c",
         "response_builder.h": "c",
-        "time.h": "c"
+        "time.h": "c",
+        "string_view": "c"
     }
 }

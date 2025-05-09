@@ -1,6 +1,14 @@
 #ifndef HTTP_STUFF_H
 #define HTTP_STUFF_H
 
+/**
+ * http_stuff.h
+ *
+ * Header file for http_stuff.c
+ *
+ * The http structs and enums are defined here
+ */
+
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>

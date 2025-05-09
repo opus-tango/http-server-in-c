@@ -1,3 +1,13 @@
+/*
+ * client_handler.c
+ *
+ * Handles a single client connection. Meant to be run in a separate thread.
+ *
+ * This function is designed to be run in a separate thread. It will receive
+ * requests from the client until the client disconnects, at which point it will
+ * return.
+ */
+
 #include "client_handler.h"
 
 #include "request_handler.h"

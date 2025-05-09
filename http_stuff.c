@@ -1,3 +1,14 @@
+/**
+ * http_stuff.c
+ *
+ * This file contains functions dealing with http requests and responses, and
+ * the corresponding structs defined in http_stuff.h
+ *
+ * Included functionality is allocation and freeing of the structs, printing for
+ * debug purposes, string conversion, and utility functions for dealing with
+ * headers and parsing
+ */
+
 #include "http_stuff.h"
 
 http_request* create_http_request() {

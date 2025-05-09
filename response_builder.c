@@ -1,3 +1,11 @@
+/**
+ * response_builder.c
+ *
+ * This file contains functions for handling the different types of HTTP
+ * requests. Currently, it only handles GET requests and serves static files.
+ *
+ */
+
 #include "response_builder.h"
 
 void response_handle_get(http_request* req, http_response* res) {

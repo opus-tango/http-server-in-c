@@ -1,6 +1,12 @@
 #ifndef CLIENT_HANDLER_H
 #define CLIENT_HANDLER_H
 
+/**
+ * Header file for client_handler.c
+ *
+ * Nothing special here
+ */
+
 #include <netinet/in.h>
 #include <netinet/tcp.h>
 #include <pthread.h>
