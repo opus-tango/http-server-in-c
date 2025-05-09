@@ -37,6 +37,8 @@ void response_handle_get(http_request* req, http_response* res) {
         serve_404(res);
         return;
     }
+
+    free(file_path);
 }
 
 void response_handle_post(http_request* req, http_response* res) {
@@ -162,7 +164,7 @@ void response_build_static_file(char* file_path, content_type content_type,
     // Set content type string
     res->content_type = content_type_str;
 
-    log_message(LOG_INFO, "Serving %s\n", file_path);
+    log_message(LOG_INFO, "Serving %s", file_path);
 }
 
 void serve_404(http_response* res) {

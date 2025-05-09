@@ -216,6 +216,7 @@ char* response_headers_to_string(http_response* res) {
     strcat(response, "Content-Length: ");
     strcat(response, content_lenth_str);
     strcat(response, "\r\n\r\n");
+    free(content_lenth_str);
     return response;
 }
 
@@ -226,7 +227,7 @@ char* get_header_value_request(http_request* req, char* key) {
             return req->headers[i].value;
         }
     }
-    log_message(LOG_WARN, "Header %s not found\n", key);
+    log_message(LOG_WARN, "Header %s not found", key);
     return NULL;
 }
 

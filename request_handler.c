@@ -68,11 +68,13 @@ void parse_http_request(char* request, int length, struct http_request* req) {
         req->method = DELETE;
     } else {
         log_message(LOG_ERROR, "Invalid packet (method), cannot parse");
+        free(type);
         return;
     }
     req->method_str = (char*)malloc(type_end - type_start + 1);
     strncpy(req->method_str, type_start, type_end - type_start);
     req->method_str[type_end - type_start] = '\0';
+    free(type);
 
     // Extract URL
     char* url_start = type_end + 1;

@@ -37,9 +37,10 @@ void* client_handler(void* args) {
         send(client, response->body, response->content_length, 0);
         send(client, "\r\n", 2, 0);
 
-        free(response);
-        return NULL;
+        free_http_response(response);
+        free(headers);
     }
     free(buffer);
+    free(args);
     return NULL;
 }
