@@ -19,15 +19,15 @@ void handle_request(char* request, int length, http_response* response) {
             break;
 
         case POST:
-            /* code */
+            response_handle_post(req, response);
             break;
 
         case PUT:
-            /* code */
+            response_handle_put(req, response);
             break;
 
         case DELETE:
-            /* code */
+            response_handle_delete(req, response);
             break;
     }
 

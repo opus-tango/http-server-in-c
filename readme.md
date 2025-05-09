@@ -3,6 +3,10 @@ The HTTP server has gotten much larger and more complex than I originally antici
 
 This evening I finally worked through the bugs on handling file serving, and have been able to get it working with arbitrary file types. They are still restricted "for security reasons," but it can theoretically be expanded to any file type.
 
+The server does not handle routes, only raw file paths, and also does not include the templating engine that I was planning to include, but I simply ran out of time. After doing a little research I have also decided to scrap the idea of implementing file uploading, since parsing streamed files is a lot more complex than I can tackle in the time I have left.
+
+I will implement logging to a log file to satisfy the file writing requirement.
+
 ## Final Project Plan Update
 Even though I haven't had time to work on it, I have been turning this project over in my mind for the past two weeks. I have wanted to build my own basic HTTP server for a while, and this is the only piece of homework due this week, so I have decided to make my final project a basic HTTP server.
 

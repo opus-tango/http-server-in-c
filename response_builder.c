@@ -29,6 +29,27 @@ void response_handle_get(http_request* req, http_response* res) {
     }
 }
 
+void response_handle_post(http_request* req, http_response* res) {
+    // TODO
+    printf("POST request\n");
+    printf("%s\n", req->url);
+    serve_501(res);
+}
+
+void response_handle_delete(http_request* req, http_response* res) {
+    // TODO
+    printf("DELETE request\n");
+    printf("%s\n", req->url);
+    serve_501(res);
+}
+
+void response_handle_put(http_request* req, http_response* res) {
+    // TODO
+    printf("PUT request\n");
+    printf("%s\n", req->url);
+    serve_501(res);
+}
+
 void response_build_static_file(char* file_path, content_type content_type,
                                 status_code status_code, http_response* res) {
     // Open the file and verify that the file exists
@@ -83,6 +104,10 @@ void response_build_static_file(char* file_path, content_type content_type,
 
         case INTERNAL_SERVER_ERROR:
             strcat(status_line, "500 Internal Server Error");
+            break;
+
+        case FORBIDDEN:
+            strcat(status_line, "403 Forbidden");
             break;
 
         default:
@@ -147,4 +172,19 @@ void serve_404(http_response* res) {
 void serve_500(http_response* res) {
     char* file_path = "./public/500.html";
     response_build_static_file(file_path, HTML, INTERNAL_SERVER_ERROR, res);
+}
+
+void serve_403(http_response* res) {
+    char* file_path = "./public/403.html";
+    response_build_static_file(file_path, HTML, FORBIDDEN, res);
+}
+
+void serve_501(http_response* res) {
+    char* file_path = "./public/501.html";
+    response_build_static_file(file_path, HTML, NOT_IMPLEMENTED, res);
+}
+
+void serve_400(http_response* res) {
+    char* file_path = "./public/400.html";
+    response_build_static_file(file_path, HTML, BAD_REQUEST, res);
 }
