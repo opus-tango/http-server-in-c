@@ -1,8 +1,8 @@
-# Simple HTTP Server
+# HTTP Server
 
-This project is a simple HTTP server that can serve static files. I had big plans for POST request support, a templating engine, and backend features, but just serving files turns out to be quite a lot of work, and I unfortunately ran out of time.
+This project is a simple HTTP server that can serve static files. I had big plans for POST request support, a templating engine, and backend features, but just serving files turns out to be quite tricky, and I unfortunately ran out of time.
 
-For bureaucratic reasons I took a 100 level CS course in my senior year, and since I had no final exams I went totally overboard for my final project. I always wanted to write my own HTTP server, and the final project was the perfect excuse to actually do it. Because of the scope of the program I consider it more of a personal project than a school assignment since I went FAR and above the assignemnt requirements just for the fun of it.
+For bureaucratic reasons I took a 100 level CS course in my senior year, and since I had no final exams I went totally overboard for my final project. I always wanted to write my own HTTP server, and the final project was the perfect excuse to actually do it. Because of the scope of the program I consider it more of a personal project than a school assignment since I went FAR and above the assignment requirements just for the fun of it.
 
 In hindsight there were a lot of decisions I would make differently around code architecture and organization, but I learned so, SO, much doing this project. It has definitely been worth the effort and mistakes even if it's a litte rough around the edges.
 
